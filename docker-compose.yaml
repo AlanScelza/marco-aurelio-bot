@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  marco-aurelio:
+    image:
+      build:
+        context: .
+        dockerfile: Dockerfile
+    container_name: marco-aurelio
+    environment:
+      BOT_TOKEN: "${BOT_TOKEN}"
+      STORAGE_TYPE: MongoStorage
+      MONGO_STORAGE_URL: "mongodb://mongo:27017/meditaciones"
+      MONGO_STORAGE_DB: "meditaciones"
+      MONGO_STORAGE_COLLECTION: "meditaciones"
+      TZ: "America/Argentina/Buenos_Aires"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7.0.0
+    container_name: mongo
+    volumes:
+      - ./mongo/mongod.conf:/etc/mongod.conf
+      - ./mongo/db:/data/db
+    command: --wiredTigerCacheSizeGB=0.25
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
