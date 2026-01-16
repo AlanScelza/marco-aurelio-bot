@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 .mongo/
 mongo/db/
+meditaciones.txt
